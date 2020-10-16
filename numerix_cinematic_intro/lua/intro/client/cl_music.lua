@@ -22,37 +22,7 @@ function Intro.StartYoutube(id)
 
                 if !info.Already and !timer.Exists("Intro.YT:GetPercentage") then
                     timer.Create("Intro.YT:GetPercentage", 1, 0, function()
-                        http.Fetch( "http://92.222.234.121:8080/logs/"..id..".txt", 
-                            function( body, len, headers, code )
-                                if (code != 200 or body == "") and timer.Exists("Intro.YT:GetPercentage") then 
-                                    timer.Destroy("Intro.YT:GetPercentage")
-
-                                    ply:IntroChatInfo(string.format(Intro.GetLanguage("An error occurred while converting. Contact an administrator if this persists. Error : %s"), error), 3)
-                                end
-
-                                local data = util.JSONToTable(body)
-                    
-                                if istable(data) and data.progress then
-                                    if data.progress.percentage != 100 then
-                                        ply:IntroChatInfo(string.format(Intro.GetLanguage("Conversion %d%% | Estimated time left : %d seconds"), math.Round(data.progress.percentage), data.progress.eta))
-                                    else
-                                        Intro.PlayMusic(info.Link)
-    
-                                        if timer.Exists("Intro.YT:GetPercentage") then
-                                            timer.Destroy("Intro.YT:GetPercentage")
-                                        end
-                                    end
-                                end
-                            end,
-    
-                            function( error )
-                                ply:IntroChatInfo(string.format(Intro.GetLanguage("An error occurred while retrieving the data. Contact an administrator if this persists. Error : %s"), error), 3)
-                                
-                                if timer.Exists("Intro.YT:GetPercentage") then
-                                    timer.Destroy("Intro.YT:GetPercentage")
-                                end
-                            end
-                        )
+                        Intro.StatusConversion(ply, id, info)   
                     end)
                 else
                     Intro.PlayMusic(info.Link)
@@ -65,6 +35,48 @@ function Intro.StartYoutube(id)
         function( error )
             ply:IntroChatInfo(string.format(Intro.GetLanguage("An error occurred while converting. Contact an administrator if this persists. Error : %s"), error), 3)
         
+            if timer.Exists("Intro.YT:GetPercentage") then
+                timer.Destroy("Intro.YT:GetPercentage")
+            end
+        end
+    )
+end
+
+function Intro.StatusConversion(ply, id, info)
+    local entity = tostring(ent)
+
+    http.Fetch( "http://92.222.234.121:8080/logs/"..id..".txt", 
+        function( body, len, headers, code )
+            if (code != 200 or body == "") and timer.Exists("Intro.YT:GetPercentage") then 
+                timer.Destroy("Intro.YT:GetPercentage")
+
+                ply:IntroChatInfo(string.format(Intro.GetLanguage("An error occurred while converting. Contact an administrator if this persists. Error : %s"), error), 3)
+            end
+
+            local data = util.JSONToTable(body)
+
+            if istable(data) and data.progress then
+                if (data.progress and data.progress.percentage != 100) and !data.videoTitle then
+                    ply:IntroChatInfo(string.format(Intro.GetLanguage("Conversion %d%% | Estimated time left : %d seconds"), math.Round(data.progress.percentage), data.progress.eta))
+                elseif (data.progress and data.progress.percentage == 100) or data.videoTitle then
+                    Intro.PlayMusic(info.Link)
+
+                    if timer.Exists("Intro.YT:GetPercentage") then
+                        timer.Destroy("Intro.YT:GetPercentage")
+                    end
+                else
+                    ply:IntroChatInfo(Intro.GetLanguage("An error occurred while converting. Contact an administrator if this persists.") )
+
+                    if timer.Exists("Intro.YT:GetPercentage") then
+                        timer.Destroy("Intro.YT:GetPercentage")
+                    end
+                end
+            end
+        end,
+
+        function( error )
+            ply:IntroChatInfo(string.format(Intro.GetLanguage("An error occurred while retrieving the data. Contact an administrator if this persists. Error : %s"), error), 3)
+            
             if timer.Exists("Intro.YT:GetPercentage") then
                 timer.Destroy("Intro.YT:GetPercentage")
             end
