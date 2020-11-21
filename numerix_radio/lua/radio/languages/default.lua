@@ -4,7 +4,7 @@ Radio made by Numerix (https://steamcommunity.com/id/numerix/)
 
 --------------------------------------------------------------------------------------------------]]
 
-Radio.Language.VersionDefault = "1.0.4" --DON'T TOUCH THIS
+Radio.Language.VersionDefault = "1.0.5" --DON'T TOUCH THIS
 
 Radio.Language["default"] = {
 	["The file does not exist."] = "The file does not exist.",
@@ -41,7 +41,7 @@ Radio.Language["default"] = {
 	["URL SoundCloud invalid"] = "URL SoundCloud invalid",
 	["Please install a radio in the vehicle."] = "Please install a radio in the vehicle.",
 	["Retrieving data"] = "Retrieving data",
-	["Conversion %d%% | Estimated time left : %d seconds"] = "Conversion %d%% | Estimated time left : %d seconds",
+	["Conversion %d%%"] = "Conversion %d%%",
 	["An error occurred while retrieving the data. Contact an administrator if this persists."] = "An error occurred while retrieving the data. Contact an administrator if this persists.",
 
 	--1.0.1

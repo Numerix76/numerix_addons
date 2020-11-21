@@ -39,7 +39,7 @@ Radio.Language["en"] = {
 	["URL SoundCloud invalid"] = "URL SoundCloud invalid",
 	["Please install a radio in the vehicle."] = "Please install a radio in the vehicle.",
 	["Retrieving data"] = "Retrieving data",
-	["Conversion %d%% | Estimated time left : %d seconds"] = "Conversion %d%% | Estimated time left : %d seconds",
+	["Conversion %d%%"] = "Conversion %d%%",
 	["An error occurred while retrieving the data. Contact an administrator if this persists."] = "An error occurred while retrieving the data. Contact an administrator if this persists.",
 
 	--1.0.1

@@ -23,7 +23,6 @@ ENT.Spawnable = true
 ENT.DistanceSound = Radio.Settings.DistanceSound^2 --Distance Maximum ou est émit le son
 ENT.VolumeStart = 50 --Volume quand le joueur n'a pas encore touché au volume
 
-
 function ENT:SetupDataTables()
 
     self:SetNWString( "Radio:ID", "" )

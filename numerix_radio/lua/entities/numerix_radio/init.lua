@@ -19,7 +19,11 @@ function ENT:Initialize()
     local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:Wake()
-	end
+    end
+    
+    if isnumber(self.SID) and FPP then
+        self:CPPISetOwner(Player(self.SID))
+    end
 end
 
 function ENT:AcceptInput( Name, Activator, Caller )	
