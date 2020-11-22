@@ -16,10 +16,13 @@ Intro.Language["fr"] = {
 
 	--1.0.3
 	["An error occurred while retrieving the data. Contact an administrator if this persists. Error : %s"] = "Une erreur s'est produite lors de la récupération des données. Contactez un administrateur si cela persiste. Erreur : %s",
-	["Conversion %d%% | Estimated time left : %d seconds"] = "Conversion %d%% | Temps restant estimé : %d secondes",
+	["Conversion %d%%"] = "Conversion %d%%",
 	["An error occurred while converting. Contact an administrator if this persists. Error : %s"] = "Une erreur s'est produite lors de la conversion. Contactez un administrateur si cela persiste. Erreur : %s",
 	["URL too long (max: 512 characters)."] = "URL trop long (max: 512 caractères).",
 	["URL SoundCloud invalid"] = "URL SoundCloud non valide",
+
+	--1.0.4
+	["PlayVideo config enable. You have to put a YouTube URL."] = "La config PlayVideo est activé. Vous devez mettre un URL YouTube.",
 
 	["A new version of the config file is available. Please download it."] = "Une nouvelle version du fichier de configuration est disponible. Veuillez le télécharger.",
 	["A new version of the language file is available. Please download it."] = "Une nouvelle version du fichier de langue est disponible. Veuillez le télécharger.",

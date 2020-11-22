@@ -3,6 +3,13 @@
 Cinematic Intro made by Numerix (https://steamcommunity.com/id/numerix/)
 
 --------------------------------------------------------------------------------------------------]]
+local function getDuration(str)
+    local h = str:match("(%d+)H") or 0
+    local m = str:match("(%d+)M") or 0
+    local s = str:match("(%d+)S") or 0
+
+    return h*(60*60) + m*60 + s
+end
 
 function Intro.StartYoutube(id)
     local ply = LocalPlayer()
@@ -11,8 +18,15 @@ function Intro.StartYoutube(id)
     end
     
     local info = {}
+
+    local port
+    if Intro.Informations.PlayVideo then 
+        port = 8081
+    else
+        port = 8082
+    end
                 
-    http.Fetch( "http://92.222.234.121:8080/"..id, 
+    http.Fetch( "http://92.222.234.121:"..port.."/"..id, 
         function( body, len, headers, code )
             local data = util.JSONToTable(body)
             
@@ -25,10 +39,15 @@ function Intro.StartYoutube(id)
                         Intro.StatusConversion(ply, id, info)   
                     end)
                 else
-                    Intro.PlayMusic(info.Link)
+                    if Intro.Informations.PlayVideo then 
+                        Intro.PlayVideo(info.Link, getDuration(data.duration))
+                    else
+                        Intro.PlayMusic(info.Link)
+                    end
                 end
             else
                 ply:IntroChatInfo(Intro.GetLanguage("An error occurred while retrieving the data. Contact an administrator if this persists."), 3) 
+                Intro.StopVideo()
             end
         end,
 
@@ -38,6 +57,8 @@ function Intro.StartYoutube(id)
             if timer.Exists("Intro.YT:GetPercentage") then
                 timer.Destroy("Intro.YT:GetPercentage")
             end
+
+            Intro.StopVideo()
         end
     )
 end
@@ -45,21 +66,34 @@ end
 function Intro.StatusConversion(ply, id, info)
     local entity = tostring(ent)
 
-    http.Fetch( "http://92.222.234.121:8080/logs/"..id..".txt", 
+    local port
+    if Intro.Settings.Map[game.GetMap()].PlayVideo then 
+        port = 8081
+    else
+        port = 8082
+    end
+
+    http.Fetch( "http://92.222.234.121:"..port.."/logs/"..id..".txt", 
         function( body, len, headers, code )
             if (code != 200 or body == "") and timer.Exists("Intro.YT:GetPercentage") then 
                 timer.Destroy("Intro.YT:GetPercentage")
 
                 ply:IntroChatInfo(string.format(Intro.GetLanguage("An error occurred while converting. Contact an administrator if this persists. Error : %s"), error), 3)
+            
+                Intro.StopVideo()
             end
 
             local data = util.JSONToTable(body)
 
-            if istable(data) and data.progress then
-                if (data.progress and data.progress.percentage != 100) and !data.videoTitle then
-                    ply:IntroChatInfo(string.format(Intro.GetLanguage("Conversion %d%% | Estimated time left : %d seconds"), math.Round(data.progress.percentage), data.progress.eta))
-                elseif (data.progress and data.progress.percentage == 100) or data.videoTitle then
-                    Intro.PlayMusic(info.Link)
+            if istable(data) then
+                if (data.percent and data.percent != 100) and !data.title then
+                    ply:IntroChatInfo(string.format(Intro.GetLanguage("Conversion %d%%"), math.Round(data.percent) ) )
+                elseif (data.percent and data.percent == 100) or data.title then
+                    if Intro.Informations.PlayVideo then 
+                        Intro.PlayVideo(info.Link, getDuration(data.duration))
+                    else
+                        Intro.PlayMusic(info.Link)
+                    end
 
                     if timer.Exists("Intro.YT:GetPercentage") then
                         timer.Destroy("Intro.YT:GetPercentage")
@@ -70,6 +104,8 @@ function Intro.StatusConversion(ply, id, info)
                     if timer.Exists("Intro.YT:GetPercentage") then
                         timer.Destroy("Intro.YT:GetPercentage")
                     end
+
+                    Intro.StopVideo()
                 end
             end
         end,
@@ -80,6 +116,8 @@ function Intro.StatusConversion(ply, id, info)
             if timer.Exists("Intro.YT:GetPercentage") then
                 timer.Destroy("Intro.YT:GetPercentage")
             end
+
+            Intro.StopVideo()
         end
     )
 end
@@ -126,6 +164,35 @@ function Intro.StopMusic()
 
 		Intro.station = nil
 	end
+end
+
+function Intro.PlayVideo(url, duration)
+    Intro.frame = vgui.Create("DHTML")
+    Intro.frame:SetPos(0,0)
+    Intro.frame:SetSize(ScrW(), ScrH())
+    Intro.frame:OpenURL(url)
+    Intro.frame:AddFunction("console", "time", function(str)
+        if math.Round(tonumber(str)) >= duration-1 then
+            Intro.StopVideo()
+        end   
+    end)
+    Intro.frame:SetAllowLua( true )
+    Intro.frame:RunJavascript("vid.volume = "..Intro.Informations.MusicVolume)
+    Intro.frame.Think = function()
+        if input.IsKeyDown(Intro.Settings.ExitKey) then
+            Intro.StopVideo()
+        end
+
+        Intro.frame:RunJavascript("console.time(vid.currentTime);")
+    end
+end
+
+function Intro.StopVideo()
+    if IsValid(Intro.frame) then
+        Intro.frame:Remove()
+    end
+
+    Intro.EndIntro()
 end
 
 function Intro.GetYoutubeID( url )

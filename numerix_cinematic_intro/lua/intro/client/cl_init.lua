@@ -134,12 +134,14 @@ function Intro.StartIntro()
         hook.Remove( "HUDShouldDraw", "Intro:HUDShouldDraw" )
         
         IntroStart = true
-
+        
         RunConsoleCommand("cl_drawhud", 0)
         RunConsoleCommand("simple_thirdperson_enabled", 0)
-
+        
         nombat_vol = GetConVar("nombat.volume") and GetConVar("nombat.volume"):GetInt() or 50
         RunConsoleCommand("nombat.volume", 0)
+        
+        if Intro.Informations.PlayVideo then return end
 
         LocalPlayer():ScreenFade( SCREENFADE.IN, color_black, 5, 0 )
 
@@ -298,6 +300,11 @@ function Intro.GetURL()
     local url = Intro.Informations.URLMusic
     local id = Intro.GetYoutubeID(url)
 
+    if !id and Intro.Informations.PlayVideo then
+        ply:IntroChatInfo(Intro.GetLanguage("PlayVideo config enable. You have to put a YouTube URL."), 3)
+        return
+    end
+
     if url == "" then return end 
 	if string.len(url) > 512 then
 		ply:IntroChatInfo(Intro.GetLanguage("URL too long (max: 512 characters)."), 3)
@@ -313,8 +320,8 @@ function Intro.GetURL()
 		else
 			ply:IntroChatInfo(Intro.GetLanguage("URL SoundCloud invalid"), 3)
 		end
-
 	else
         Intro.PlayMusic(url)
-	end
+    end
+    
 end
