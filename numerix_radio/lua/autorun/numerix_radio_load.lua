@@ -17,7 +17,7 @@ Radio.AllServer = Radio.AllServer or {}
 local FileSystem = "radio"
 local FileSystem_Web = "radio_paid"
 local AddonName = "Radio"
-local Version = "1.1.5"
+local Version = "1.1.6"
 local FromWorkshop = false
 
 if SERVER then
