@@ -73,7 +73,7 @@ function PANEL:MakeContent(ent, RadioBase)
                 draw.RoundedBox( 5, 0, 0, w, h, Radio.Color["button_hover"] )
             end
 
-			draw.DrawText( string.upper(v.Name), "F4Menu.Button.Text", w/2, h/2-7, Radio.Color["text"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+			draw.DrawText( string.upper(v.Name), "Radio.Button", w/2, h/2-7, Radio.Color["text"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
 			
 			surface.SetMaterial( icon )
 			surface.SetDrawColor( Radio.Color["image"] )
