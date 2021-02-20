@@ -75,7 +75,7 @@ function Radio.IsCar(ent)
 	if IsValid(ent:GetParent()) then return false end
 	
     if ent:IsVehicle() then return true end
-    if simfphys and simfphys.IsCar(ent) then return true end
+    if simfphys and simfphys.IsCar and simfphys.IsCar(ent) then return true end
     if ent:GetClass() == "prop_vehicle_jeep" then return true end
 	if scripted_ents.IsBasedOn(ent:GetClass(), "wac_hc_base") then return true end
 	
