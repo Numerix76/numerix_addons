@@ -161,10 +161,12 @@ function ENT:ConnectDisconnectRadio(ply, server, connect)
     if !connect then 
         hook.Call("Radio:DisconnectRadio", nil, ply, self, self:GetControlerRadio() )
         self:RemoveListenerRadio()
+        if self.SWEPRadio then self.LastStation = server end
+        
         return 
     end
 
-    if !IsValid(server) or server:GetClass() != "numerix_radio_server" or self:GetControlerRadio() == server then return end
+    if !IsValid(server) or !server.IsServer or self:GetControlerRadio() == server then return end
     
     oldserver:SetNWInt("Radio:Viewer", oldserver:GetNWInt("Radio:Viewer")-1)
     self:SetNWEntity("Radio:Entity", server)
@@ -173,7 +175,7 @@ function ENT:ConnectDisconnectRadio(ply, server, connect)
     self:SetNWString("Radio:ID", "")
     self:SetNWBool("Radio:Pause", false)
 
-    if self.SWEPRadio then self.LastStation = server end
+    if self.SWEPRadio then self.LastStation = server end  
 
     hook.Call("Radio:ConnectRadio", nil, ply, self, server)
 end
@@ -240,7 +242,7 @@ end
 
 function ENT:RemoveListenerRadio()
     local controler = self:GetControlerRadio()
-    
+
     if !IsValid(self) or !IsValid(controler) then return end
     if self == controler then return end
     
@@ -282,7 +284,7 @@ function ENT:ChangeModRadio(ply, radio)
         radio:SetNWEntity("Radio:Entity", radio)  
     end
 
-    if radio:IsWeapon() then radio.LastStation = self:GetControlerRadio() end
+    if radio.SWEPRadio then radio.LastStation = self:GetControlerRadio() end
 
     self:SetNWString("Radio:ID", "")
 

@@ -115,6 +115,7 @@ function Radio.ReloadMenu(menu, data, type, ent, error)
 	for k, v in ipairs(data) do
 		local durationMusic = type == 1 and Radio.getDurationYT(v.contentDetails.duration) or v.duration/1000
 		if durationMusic > Radio.Settings.MaxDuration or durationMusic <= 0 then continue end
+		if !istable(v) or ( type == 1 and !istable(v.snippet) ) then continue end
 
 		foundCompatibleRes = true
 		local base = PresetList:Add("DPanel")

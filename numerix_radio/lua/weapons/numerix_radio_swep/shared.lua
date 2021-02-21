@@ -71,7 +71,6 @@ function SWEP:PrimaryAttack()
 	end
 end
 
-
 function SWEP:SecondaryAttack()
 	if not IsFirstTimePredicted() then return end
 
@@ -108,13 +107,10 @@ function SWEP:SecondaryAttack()
 		end
 
 		timer.Simple(0.1, function()
-			self.LastStation = self:GetNWEntity("Radio:Entity")			
+			--self.LastStation = self:GetNWEntity("Radio:Entity")			
 			self:ChangeModRadio(self.Owner, radio)
+			--self:DeleteRadio()
 			self.Owner:StripWeapon( self:GetClass() )
-
-			if self:GetControlerRadio() != self then
-				self:RemoveListenerRadio()
-			end
 		end)
 	end
 end

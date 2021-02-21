@@ -16,7 +16,7 @@ Radio.AllServer = Radio.AllServer or {}
 
 local FileSystem = "radio"
 local AddonName = "Radio"
-local Version = "2.0.0"
+local Version = "2.0.1"
 local FromWorkshop = false
 
 MsgC( Color( 225, 20, 30 ), "\n-------------------------------------------------------------------\n")

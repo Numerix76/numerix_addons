@@ -95,7 +95,7 @@ function ENT:GetDurationRadio()
 end
 
 function ENT:GetControlerRadio()
-    return self:GetNWEntity("Radio:Entity") or self.LastStation
+    return self.SWEPRadio and self.LastStation or self:GetNWEntity("Radio:Entity")
 end
 
 function ENT:GetColorRadio()

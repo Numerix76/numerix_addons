@@ -36,16 +36,16 @@ local InfoTable = {
 	InfoBlackPosW = 350,
 	InfoBlackPosH = 300,
 
-	InfoPosVoice = Vector(11, 39.8, 48.7),
+	InfoPosVoice = Vector(11.5, 39.8, 48.7),
 	InfoAngVoice = Angle( 0, 90, 90),
 	InfoOffsetVoice = 0.05,
 
-	InfoVoiceBackX = -15,
+	InfoVoiceBackX = -10,
 	InfoVoiceBackY = -65,
-	InfoVoiceBackW = 300,
+	InfoVoiceBackW = 245,
 	InfoVoiceBackH = 200,
 
-	InfoVoiceTextX = 0,
+	InfoVoiceTextX = 10,
 	InfoVoiceTextY = -10,
 }
 
