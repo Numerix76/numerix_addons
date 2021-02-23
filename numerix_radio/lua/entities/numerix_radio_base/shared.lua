@@ -12,7 +12,7 @@ ENT.Author			= "Numerix"
 ENT.Contact			= "https://steamcommunity.com/id/numerix/"
 ENT.Purpose			= ""
 ENT.Instructions	= ""					
-ENT.Spawnable = true
+ENT.Spawnable = false
 
 function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS

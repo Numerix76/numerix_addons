@@ -228,10 +228,7 @@ function SWEP:Initialize()
 				if (self.ShowViewModel == nil or self.ShowViewModel) then
 					vm:SetColor(Color(255,255,255,255))
 				else
-
-					vm:SetColor(Color(255,255,255,1))
-
-					vm:SetMaterial("Debug/hsv")			
+					vm:SetColor(Color(255,255,255,1))		
 				end
 			end
 		end
