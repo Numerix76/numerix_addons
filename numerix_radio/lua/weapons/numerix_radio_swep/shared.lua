@@ -253,14 +253,10 @@ end
 
 function SWEP:OnRemove()
 	self:Holster()
-
-	Radio.AllRadio[self] = nil	
 	
-	if CLIENT then
-		self:StopMusicRadio()
-	end
-
 	if SERVER then
+		Radio.AllRadio[self] = nil	
+		
 		self:DeleteRadio()
 	end
 end

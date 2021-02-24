@@ -45,7 +45,7 @@ function PANEL:MakeContent(ent, RadioBase)
     local InitialPanel = false
     for k, v in ipairs( Radio.Settings.Navigation ) do
 
-		if not v.Enabled or v.Visible and !v.Visible(ply, ent) then continue end
+		if not v.Enabled or v.Visible and !v.Visible(LocalPlayer(), ent) then continue end
 
 		local icon = Material( v.Icon )
 

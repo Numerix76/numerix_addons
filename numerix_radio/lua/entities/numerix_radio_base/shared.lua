@@ -14,10 +14,6 @@ ENT.Purpose			= ""
 ENT.Instructions	= ""					
 ENT.Spawnable = false
 
-function ENT:UpdateTransmitState()
-	return TRANSMIT_ALWAYS
-end
-
 function ENT:SetupDataTables()
     self:InitRadio()
 end

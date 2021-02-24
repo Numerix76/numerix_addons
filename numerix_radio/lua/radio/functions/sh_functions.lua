@@ -32,9 +32,9 @@ function ENT:InitRadio()
 		
 
 		self:SetNWBool( "Radio:Pause", false)
-		self:SetNWBool("Radio:Rainbow", false)
-		self:SetNWBool("Radio:Private", false)
-		self:SetNWBool("Radio:PrivateBuddy", false)
+		self:SetNWBool( "Radio:Rainbow", false)
+		self:SetNWBool( "Radio:Private", false)
+		self:SetNWBool( "Radio:PrivateBuddy", false)
 
 		self:SetNWEntity("Radio:Entity", self)
 		self.LastStation = self
@@ -91,7 +91,7 @@ end
 
 function ENT:GetDurationRadio()
 	local ent = self:GetControlerRadio()
-	return ent:GetNWString("Radio:Duration") or 0
+	return ent:GetNWInt("Radio:Duration") or 0
 end
 
 function ENT:GetControlerRadio()

@@ -15,3 +15,16 @@ local function ReceiveVehicleData()
 	Radio.AllRadio[ent] = true
 end
 net.Receive("Radio:SendVehicleData", ReceiveVehicleData)
+
+local function OnRemove()
+	local ent = net.ReadEntity()
+
+	ent:StopMusicRadio()
+
+	if ent.IsServer then
+		Radio.AllServer[ent] = nil
+	end
+	
+	Radio.AllRadio[ent] = nil
+end
+net.Receive("Radio:OnRemove", OnRemove)

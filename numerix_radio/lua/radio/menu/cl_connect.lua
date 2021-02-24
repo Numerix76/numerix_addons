@@ -48,6 +48,8 @@ function PANEL:MakeContent(ent)
 	end
 
     for station, _ in pairs(Radio.AllServer) do
+		if !IsValid(station) then continue end
+		
         local pnl = ServerList:AddLine(station == ent:GetNWEntity("Radio:Entity") and Radio.GetLanguage("Yes") or Radio.GetLanguage("No") , station:GetNWString("Radio:StationName"), station:GetNWString("Radio:Title"),station:GetNWString("Radio:Author"))
 		pnl.ent = station
 	end

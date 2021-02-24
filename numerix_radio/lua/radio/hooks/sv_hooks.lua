@@ -12,7 +12,7 @@ hook.Add("OnEntityCreated", "Radio:OnVehiculeCreate", function(ent)
 end)
 
 hook.Add("EntityRemoved", "Radio:OnVehiculeRemove", function(ent)
-    if ent:IsCarRadio() and ent:GetNWBool("Radio:HasRadio") then           
+    if ent:IsCarRadio() and ent:GetNWBool("Radio:HasRadio") then   
         ent:DeleteRadio()
     end
 end)
@@ -55,9 +55,9 @@ end)
 
 hook.Add( "playerGetSalary", "Radio:AnimSalary", function(ply, amount)
     if Radio.Settings.MakeSalary then
-        if ply:Team() == Radio.Settings.TeamRadio then 
+        if ply:Team() == Radio.Settings.TeamRadio then
             local total = 0
-            for _, ent in ipairs(Radio.AllServer) do
+            for ent, _ in pairs(Radio.AllServer) do
                 if ent.FPPOwner != ply then continue end
                 total = total + ent:GetNWInt("Radio:Viewer")*Radio.Settings.Salary
             end

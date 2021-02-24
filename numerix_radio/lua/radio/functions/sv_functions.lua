@@ -34,7 +34,7 @@ end
 
 function ENT:StopMusicRadio(ply)
     if !self:CanModificateRadio(ply) then return end 
-    if self != self:GetNWEntity("Radio:Entity") then return end
+    if self != self:GetControlerRadio() then return end
 
     self:SetNWString( "Radio:ID", "" )
     self:SetNWString( "Radio:Author", "" )
@@ -91,7 +91,7 @@ end
 
 function ENT:SetPauseRadio(ply, pause)
     if !self:CanModificateRadio(ply) then return end
-    if self != self:GetNWEntity("Radio:Entity") then return end
+    if self != self:GetControlerRadio() then return end
 
     if pause then
         self.PauseTime = CurTime() - self:GetNWInt("Radio:Time")
@@ -109,7 +109,7 @@ end
 
 function ENT:SeekTimeRadio(ply, time)
     if !self:CanModificateRadio(ply) then return end
-    if self != self:GetNWEntity("Radio:Entity") then return end
+    if self != self:GetControlerRadio() then return end
     if self:IsPlayingLive() then return end
 
     time = math.Clamp(time, 0, self:GetDurationRadio())
@@ -218,8 +218,13 @@ function ENT:SetPrivateBuddyRadio(ply, privateBuddy)
     hook.Call("Radio:ChangePrivateBuddyState", nil, ply, self, privateBuddy)
 end
 
+util.AddNetworkString("Radio:OnRemove")
 function ENT:DeleteRadio() 
     if !IsValid(self) then return end
+
+    net.Start("Radio:OnRemove")
+    net.WriteEntity(self)
+    net.Broadcast()
 
     self:SetNWString( "Radio:ID", "" )
     self:SetNWString( "Radio:Author", "" )
@@ -251,7 +256,6 @@ function ENT:RemoveListenerRadio()
 end
 
 function ENT:ChangeModRadio(ply, radio)
-
     if !IsValid(self) or !IsValid(radio) then return end
 
     radio.PauseTime = self.PauseTime
@@ -284,7 +288,13 @@ function ENT:ChangeModRadio(ply, radio)
         radio:SetNWEntity("Radio:Entity", radio)  
     end
 
-    if radio.SWEPRadio then radio.LastStation = self:GetControlerRadio() end
+    if radio.SWEPRadio then 
+        if self == self:GetControlerRadio() then
+            radio.LastStation = radio
+        else
+            radio.LastStation = self:GetControlerRadio()
+        end
+    end
 
     self:SetNWString("Radio:ID", "")
 

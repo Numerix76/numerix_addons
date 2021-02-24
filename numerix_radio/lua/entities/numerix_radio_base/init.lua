@@ -39,5 +39,5 @@ function ENT:OnRemove()
 end
 
 function ENT:UpdateTransmitState()
-	return TRANSMIT_ALWAYS;
+	return TRANSMIT_ALWAYS
 end

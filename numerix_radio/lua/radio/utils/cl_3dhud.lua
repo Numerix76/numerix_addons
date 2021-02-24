@@ -11,7 +11,7 @@ local prevFrame = {}
 local bar = 128
 local color
 function ENT:Draw3DInfo(InfoTable)
-    if LocalPlayer():GetPos():DistToSqr( self:GetPos() ) > 400^2 then return end
+    --if LocalPlayer():GetPos():DistToSqr( self:GetPos() ) > 400^2 then return end
 
     local bar_w = math.Round(InfoTable.InfoMaxWFFT/(bar+1))
     local radio = self:GetControlerRadio()
