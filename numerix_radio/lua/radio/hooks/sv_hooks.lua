@@ -46,7 +46,7 @@ hook.Add( "PlayerCanHearPlayersVoice", "Radio:CanPlayerHearRadioVoice", function
 		if ent:IsCarRadio() and !ent:CanHearInCarRadio(listener) or !ent:IsCarRadio() and ent:GetPos():DistToSqr( listener:GetPos() ) < ent.DistanceSound then continue end
 
 		if 	ent:CanHearRadio(listener) and ( IsValid(controler) and controler != ent and controler:GetNWBool("Radio:Voice") ) and
-			( talker:GetPos():DistToSqr( controler:GetPos() ) < 100000 ) then
+			( talker:GetPos():DistToSqr( controler:GetPos() ) < 50000 ) then
 				
 			return true, false
 		end

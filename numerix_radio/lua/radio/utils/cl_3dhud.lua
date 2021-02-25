@@ -11,7 +11,7 @@ local prevFrame = {}
 local bar = 128
 local color
 function ENT:Draw3DInfo(InfoTable)
-    --if LocalPlayer():GetPos():DistToSqr( self:GetPos() ) > 400^2 then return end
+    if LocalPlayer():GetPos():DistToSqr( self:GetPos() ) > 400^2 then return end
 
     local bar_w = math.Round(InfoTable.InfoMaxWFFT/(bar+1))
     local radio = self:GetControlerRadio()
@@ -158,7 +158,7 @@ function ENT:Draw3DInfo(InfoTable)
             surface.SetDrawColor( Radio.Color["voice_background"] );
             surface.DrawRect(InfoTable.InfoVoiceBackX, InfoTable.InfoVoiceBackY, InfoTable.InfoVoiceBackW, InfoTable.InfoVoiceBackH)
             if( radio:GetNWBool('Radio:Voice') ) then
-                if( LocalPlayer().RadioVoice ) then
+                if( LocalPlayer().RadioVoice and ( LocalPlayer():GetPos():DistToSqr( self:GetPos() ) < 50000 ) ) then
                     surface.SetTextColor( Radio.Color["voice_active"] );
                 else
                     surface.SetTextColor( Radio.Color["voice_enable"] );
