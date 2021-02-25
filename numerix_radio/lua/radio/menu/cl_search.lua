@@ -124,6 +124,8 @@ function Radio.ReloadMenu(menu, data, type, ent, error)
 		base.Paint = function(s, w, h) end
 		
 		Radio.GetImage(type == 1 and v.snippet.thumbnails.default.url or v.artwork_url, v.id..".jpg", function(url, filename)
+			if !IsValid(base) then return end
+			
 			local icon = vgui.Create("DImage", base)
 			icon:SetPos(0, 0)
 			icon:SetSize(base:GetWide()/5, base:GetTall())
